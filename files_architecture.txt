@@ -1,0 +1,17 @@
+project/
+│
+├── producers/
+│   ├── jobs_producer.py
+│   ├── news_producer.py
+│   └── fx_producer.py
+│
+├── spark/
+│   └── stream_processing.py
+│
+├── airflow/
+│   └── dags/pipeline_dag.py
+│
+├── database/
+│   └── schema.sql
+│
+├── docker-compose.yml

@@ -1,0 +1,62 @@
+                     ┌──────────────────────────────┐
+                     │        DATA SOURCES          │
+                     │                              │
+                     │  GitHub API                  │
+                     │  Exchange Rate API          │
+                     │  News API                   │
+                     │  Jobs API                   │
+                     └──────────────┬──────────────┘
+                                    │
+                                    ▼
+                ┌────────────────────────────────────┐
+                │        AIRFLOW (ORCHESTRATOR)      │
+                │                                    │
+                │  - schedules every X minutes/hours │
+                │  - triggers ETL scripts           │
+                │  - handles retries + logs         │
+                └──────────────┬─────────────────────┘
+                               │
+        ┌──────────────────────┼──────────────────────┐
+        ▼                      ▼                      ▼
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│ GitHub Task  │     │ FX Task      │     │ News Task    │
+│ (ETL script) │     │ (ETL script) │     │ (ETL script) │
+└──────┬───────┘     └──────┬───────┘     └──────┬───────┘
+       ▼                    ▼                    ▼
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│ Clean +      │   │ Clean +      │   │ Clean +      │
+│ transform    │   │ transform    │   │ transform    │
+└──────┬───────┘   └──────┬───────┘   └──────┬───────┘
+       ▼                    ▼                    ▼
+                ┌──────────────────────────────┐
+                │            KAFKA             │
+                │                              │
+                │ Topics:                      │
+                │ - github_repos              │
+                │ - exchange_rates            │
+                │ - news_feed                 │
+                │ - job_listings              │
+                └──────────────┬──────────────┘
+                               ▼
+                ┌──────────────────────────────┐
+                │     SPARK STREAMING LAYER    │
+                │                              │
+                │ - data cleaning             │
+                │ - enrichment (NLP, joins)   │
+                │ - aggregations              │
+                └──────────────┬──────────────┘
+                               ▼
+        ┌────────────────────────────────────────────┐
+        │                STORAGE LAYER              │
+        │                                            │
+        │ PostgreSQL → analytics tables             │
+        │ Cassandra  → raw events                   │
+        │ Data Lake  → parquet files               │
+        └──────────────┬────────────────────────────┘
+                       ▼
+        ┌────────────────────────────────────────────┐
+        │              VISUALIZATION                │
+        │                                            │
+        │ Apache Superset / Power BI / Tableau      │
+        │ dashboards + insights                     │
+        └────────────────────────────────────────────┘

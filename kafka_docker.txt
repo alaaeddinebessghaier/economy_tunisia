@@ -1,0 +1,71 @@
+🚀 1. Start Docker service
+sudo systemctl start docker
+
+
+🚀 2. Check Docker is working
+sudo docker ps
+
+
+🚀 3. Go to your Kafka project folder
+cd ~/end_to_end_data_engineering_project/kafka-project
+	This is where your docker-compose.yml is
+
+🚀 4. Start Kafka + Zookeeper
+sudo docker-compose up -d
+	reads docker-compose.yml
+	creates containers:
+	Kafka
+	Zookeeper
+	-d = run in background
+	
+
+🚀 5. Check containers are running
+sudo docker ps
+	kafka-project_kafka_1
+	kafka-project_zookeeper_1
+	
+	
+🚨 If Kafka NOT running 	sudo docker logs kafka-project_kafka_1
+
+
+🚀 6. Enter Kafka container
+sudo docker exec -it kafka-project_kafka_1 bash
+🧠 Why?	You need Kafka CLI tools inside container
+
+
+🚀 7. Create a topic
+kafka-topics --create \
+--topic github_repos \
+--bootstrap-server localhost:9092 \
+--partitions 1 \
+--replication-factor 1
+
+🧠 Why?	Kafka stores data in topics		No topic → no data storage
+
+🚀 8. Check topic exists
+kafka-topics --list --bootstrap-server localhost:9092
+
+
+🚀 9. Run your Python producer
+python producers/github_trends.py
+🧠 Why?	This sends data → Kafka
+
+
+🚀 10. Read data from Kafka (verify)
+kafka-console-consumer \
+--bootstrap-server localhost:9092 \
+--topic github_repos \
+--from-beginning
+🧠 Why?	Kafka doesn’t show data automatically	You must consume it
+
+🚀 12. Stop everything (when done)
+sudo docker-compose down
+
+
+
+Start Docker
+→ docker-compose up
+→ create topic
+→ run producer
+→ run consumer
+→ see data
