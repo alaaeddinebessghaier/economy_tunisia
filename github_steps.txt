@@ -1,3 +1,9 @@
 Step 1 — initialize repo (ONLY once)		git init
-Step 2 — first commit (baseline)		git add .
-git commit -m "v1: initial API ingestion (GitHub + Jobs + News)"
+git config --global user.name "Alaa Eddine"
+git config --global user.email "your_email@example.com"
+
+git add .
+git commit -m "v1: initial api and kafka integration"
+
+git branch -M main
+git push -u origin main

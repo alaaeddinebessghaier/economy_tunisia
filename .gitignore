@@ -1,0 +1,15 @@
+# Airflow auto-generates these — no need to push them
+airflow/logs/           ← can be huge, changes every run
+airflow/airflow.db      ← local sqlite database, personal to your machine
+airflow/airflow.cfg     ← contains local paths and secrets
+airflow/webserver_config.py  ← auto-generated config
+
+# Python junk
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment & secrets — NEVER push these
+.env
+venv/
+*.egg-info/

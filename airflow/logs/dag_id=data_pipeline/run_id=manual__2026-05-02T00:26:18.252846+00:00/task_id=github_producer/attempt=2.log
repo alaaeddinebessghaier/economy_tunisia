@@ -1,0 +1,48 @@
+[2026-05-02T00:32:24.075+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-02T00:32:24.127+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_pipeline.github_producer manual__2026-05-02T00:26:18.252846+00:00 [queued]>
+[2026-05-02T00:32:24.140+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_pipeline.github_producer manual__2026-05-02T00:26:18.252846+00:00 [queued]>
+[2026-05-02T00:32:24.140+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 3
+[2026-05-02T00:32:24.168+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): github_producer> on 2026-05-02 00:26:18.252846+00:00
+[2026-05-02T00:32:24.180+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'data_pipeline', 'github_producer', 'manual__2026-05-02T00:26:18.252846+00:00', '--job-id', '153', '--raw', '--subdir', 'DAGS_FOLDER/pipeline_dag.py', '--cfg-path', '/tmp/tmp10sy81wz']
+[2026-05-02T00:32:24.184+0000] {standard_task_runner.py:91} INFO - Job 153: Subtask github_producer
+[2026-05-02T00:32:24.184+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=454) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-02T00:32:24.185+0000] {standard_task_runner.py:64} INFO - Started process 456 to run task
+[2026-05-02T00:32:24.267+0000] {task_command.py:426} INFO - Running <TaskInstance: data_pipeline.github_producer manual__2026-05-02T00:26:18.252846+00:00 [running]> on host 4c22c823134d
+[2026-05-02T00:32:24.411+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='alaa' AIRFLOW_CTX_DAG_ID='data_pipeline' AIRFLOW_CTX_TASK_ID='github_producer' AIRFLOW_CTX_EXECUTION_DATE='2026-05-02T00:26:18.252846+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-02T00:26:18.252846+00:00'
+[2026-05-02T00:32:24.412+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-02T00:32:24.439+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-02T00:32:24.440+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'python /opt/***/producers/github_trends.py']
+[2026-05-02T00:32:24.457+0000] {subprocess.py:86} INFO - Output:
+[2026-05-02T00:33:28.367+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2026-05-02T00:33:28.368+0000] {subprocess.py:93} INFO -   File "/opt/***/producers/github_trends.py", line 71, in <module>
+[2026-05-02T00:33:28.369+0000] {subprocess.py:93} INFO -     main()
+[2026-05-02T00:33:28.369+0000] {subprocess.py:93} INFO -   File "/opt/***/producers/github_trends.py", line 67, in main
+[2026-05-02T00:33:28.369+0000] {subprocess.py:93} INFO -     send_data(events)
+[2026-05-02T00:33:28.370+0000] {subprocess.py:93} INFO -   File "/opt/***/producers/github_trends.py", line 57, in send_data
+[2026-05-02T00:33:28.370+0000] {subprocess.py:93} INFO -     producer.send("github_repos", value=event)
+[2026-05-02T00:33:28.370+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.12/site-packages/kafka/producer/kafka.py", line 844, in send
+[2026-05-02T00:33:28.370+0000] {subprocess.py:93} INFO -     self._wait_on_metadata(topic, timer.timeout_ms)
+[2026-05-02T00:33:28.371+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.12/site-packages/kafka/producer/kafka.py", line 968, in _wait_on_metadata
+[2026-05-02T00:33:28.371+0000] {subprocess.py:93} INFO -     raise Errors.KafkaTimeoutError(
+[2026-05-02T00:33:28.371+0000] {subprocess.py:93} INFO - kafka.errors.KafkaTimeoutError: KafkaTimeoutError: Failed to update metadata after 60.0 secs.
+[2026-05-02T00:33:28.449+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-05-02T00:33:28.450+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-02T00:33:28.467+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-05-02T00:33:28.474+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=data_pipeline, task_id=github_producer, run_id=manual__2026-05-02T00:26:18.252846+00:00, execution_date=20260502T002618, start_date=20260502T003224, end_date=20260502T003328
+[2026-05-02T00:33:28.508+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 153 for task github_producer (Bash command failed. The command returned a non-zero exit code 1.; 456)
+[2026-05-02T00:33:28.529+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-02T00:33:28.557+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-02T00:33:28.560+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -1,0 +1,40 @@
+[2026-05-01T23:24:54.952+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T23:24:54.979+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_pipeline.exchange_rate_producer manual__2026-05-01T23:19:53.429046+00:00 [queued]>
+[2026-05-01T23:24:54.986+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_pipeline.exchange_rate_producer manual__2026-05-01T23:19:53.429046+00:00 [queued]>
+[2026-05-01T23:24:54.986+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 3
+[2026-05-01T23:24:54.996+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): exchange_rate_producer> on 2026-05-01 23:19:53.429046+00:00
+[2026-05-01T23:24:55.002+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=1216) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-01T23:24:55.003+0000] {standard_task_runner.py:64} INFO - Started process 1220 to run task
+[2026-05-01T23:24:55.002+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'data_pipeline', 'exchange_rate_producer', 'manual__2026-05-01T23:19:53.429046+00:00', '--job-id', '101', '--raw', '--subdir', 'DAGS_FOLDER/pipeline_dag.py', '--cfg-path', '/tmp/tmplrj9ckza']
+[2026-05-01T23:24:55.004+0000] {standard_task_runner.py:91} INFO - Job 101: Subtask exchange_rate_producer
+[2026-05-01T23:24:55.038+0000] {task_command.py:426} INFO - Running <TaskInstance: data_pipeline.exchange_rate_producer manual__2026-05-01T23:19:53.429046+00:00 [running]> on host 606f9c13027b
+[2026-05-01T23:24:55.108+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='alaa' AIRFLOW_CTX_DAG_ID='data_pipeline' AIRFLOW_CTX_TASK_ID='exchange_rate_producer' AIRFLOW_CTX_EXECUTION_DATE='2026-05-01T23:19:53.429046+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-01T23:19:53.429046+00:00'
+[2026-05-01T23:24:55.109+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T23:24:55.120+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-01T23:24:55.120+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'python /opt/***/producers/exchange_rate.py']
+[2026-05-01T23:24:55.130+0000] {subprocess.py:86} INFO - Output:
+[2026-05-01T23:24:55.456+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2026-05-01T23:24:55.457+0000] {subprocess.py:93} INFO -   File "/opt/***/producers/exchange_rate.py", line 4, in <module>
+[2026-05-01T23:24:55.457+0000] {subprocess.py:93} INFO -     from kafka import KafkaProducer
+[2026-05-01T23:24:55.457+0000] {subprocess.py:93} INFO - ModuleNotFoundError: No module named 'kafka'
+[2026-05-01T23:24:55.473+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-05-01T23:24:55.473+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T23:24:55.483+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-05-01T23:24:55.487+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=data_pipeline, task_id=exchange_rate_producer, run_id=manual__2026-05-01T23:19:53.429046+00:00, execution_date=20260501T231953, start_date=20260501T232454, end_date=20260501T232455
+[2026-05-01T23:24:55.505+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 101 for task exchange_rate_producer (Bash command failed. The command returned a non-zero exit code 1.; 1220)
+[2026-05-01T23:24:55.537+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T23:24:55.548+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T23:24:55.551+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

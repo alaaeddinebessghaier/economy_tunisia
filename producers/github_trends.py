@@ -4,31 +4,42 @@ from kafka import KafkaProducer
 from datetime import datetime, timezone
 
 
-def get_data(sk):
-    GITHUB_API_URL = "https://api.github.com/search/repositories"
-    HEADERS = {
-        "Accept": "application/vnd.github+json",
-        "User-Agent": "DataEngineering-Project"
-    }
-    QUERY = f"language:{sk}"
+GITHUB_API_URL = "https://api.github.com/search/repositories"
+HEADERS = {
+    "Accept": "application/vnd.github+json",
+    "User-Agent": "DataEngineering-Project",
+    # "Authorization": "Bearer YOUR_TOKEN"
+}
 
-    response = requests.get(GITHUB_API_URL, headers=HEADERS, params={"q": QUERY})
-    #print(json.dumps(response.json(), indent=2))
-    return response.json()
 
-def clean_data(response, sk):
+def get_data():
+    response = requests.get(
+        GITHUB_API_URL,
+        headers=HEADERS,
+        params={"q": "language:python", "per_page": 100}
+    )
+    response.raise_for_status()
+    data = response.json()
+
+    if "items" not in data:
+        raise ValueError(f"Unexpected GitHub API response: {data}")
+
+    return data
+
+
+def clean_data(response):
     events = []
     for repo in response["items"]:
         events.append({
-        "id" : repo["id"],
-        "full_name" : repo["full_name"],
-        "language" : repo["language"],
-        "stargazers_count" : repo["stargazers_count"],
-        "topics" : repo["topics"],
-        "metadata": {
+            "id": repo["id"],
+            "full_name": repo["full_name"],
+            "language": repo["language"],
+            "stargazers_count": repo["stargazers_count"],
+            "topics": repo["topics"],
+            "metadata": {
                 "source": "github-api",
                 "pipeline": "github_producer",
-                "query": f"language:{sk}",
+                "query": "language:python",
                 "fetched_at": datetime.now(timezone.utc).isoformat(),
                 "environment": "dev"
             }
@@ -36,19 +47,25 @@ def clean_data(response, sk):
     return events
 
 
-
-
-########### kafka connection
-
-producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-
 def send_data(events):
-    for event in events:
-        producer.send("github_repos", value=event)
-    producer.flush()
-    print("done sending to kafka")
+    producer = KafkaProducer(
+        bootstrap_servers='kafka:9092',
+        value_serializer=lambda v: json.dumps(v).encode('utf-8')
+    )
+    try:
+        for event in events:
+            producer.send("github_repos", value=event)
+        producer.flush()
+        print(f"Done sending {len(events)} events to Kafka")
+    finally:
+        producer.close()
 
 
-data = get_data(sk = "python")
-events = clean_data(data,"python")
-send_data(events)
+def main():
+    data = get_data()
+    events = clean_data(data)
+    send_data(events)
+
+
+if __name__ == "__main__":
+    main()

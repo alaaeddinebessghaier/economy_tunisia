@@ -1,0 +1,53 @@
+[2026-05-01T23:56:14.814+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T23:56:14.837+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_pipeline.exchange_rate_producer manual__2026-05-01T23:51:09.786995+00:00 [queued]>
+[2026-05-01T23:56:14.841+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_pipeline.exchange_rate_producer manual__2026-05-01T23:51:09.786995+00:00 [queued]>
+[2026-05-01T23:56:14.841+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 3
+[2026-05-01T23:56:14.850+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): exchange_rate_producer> on 2026-05-01 23:51:09.786995+00:00
+[2026-05-01T23:56:14.856+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=267) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-01T23:56:14.855+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'data_pipeline', 'exchange_rate_producer', 'manual__2026-05-01T23:51:09.786995+00:00', '--job-id', '128', '--raw', '--subdir', 'DAGS_FOLDER/pipeline_dag.py', '--cfg-path', '/tmp/tmpkv5pjb0v']
+[2026-05-01T23:56:14.856+0000] {standard_task_runner.py:64} INFO - Started process 268 to run task
+[2026-05-01T23:56:14.856+0000] {standard_task_runner.py:91} INFO - Job 128: Subtask exchange_rate_producer
+[2026-05-01T23:56:14.896+0000] {task_command.py:426} INFO - Running <TaskInstance: data_pipeline.exchange_rate_producer manual__2026-05-01T23:51:09.786995+00:00 [running]> on host 4337e3ea040e
+[2026-05-01T23:56:14.977+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='alaa' AIRFLOW_CTX_DAG_ID='data_pipeline' AIRFLOW_CTX_TASK_ID='exchange_rate_producer' AIRFLOW_CTX_EXECUTION_DATE='2026-05-01T23:51:09.786995+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-01T23:51:09.786995+00:00'
+[2026-05-01T23:56:14.977+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T23:56:14.985+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-01T23:56:14.986+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'python /opt/***/producers/exchange_rate.py']
+[2026-05-01T23:56:14.993+0000] {subprocess.py:86} INFO - Output:
+[2026-05-01T23:56:17.952+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2026-05-01T23:56:17.953+0000] {subprocess.py:93} INFO -   File "/opt/***/producers/exchange_rate.py", line 76, in <module>
+[2026-05-01T23:56:17.953+0000] {subprocess.py:93} INFO -     main()
+[2026-05-01T23:56:17.953+0000] {subprocess.py:93} INFO -   File "/opt/***/producers/exchange_rate.py", line 72, in main
+[2026-05-01T23:56:17.954+0000] {subprocess.py:93} INFO -     send_data(events)
+[2026-05-01T23:56:17.954+0000] {subprocess.py:93} INFO -   File "/opt/***/producers/exchange_rate.py", line 53, in send_data
+[2026-05-01T23:56:17.954+0000] {subprocess.py:93} INFO -     producer = KafkaProducer(  # moved here, not global
+[2026-05-01T23:56:17.954+0000] {subprocess.py:93} INFO -                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-05-01T23:56:17.954+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.12/site-packages/kafka/producer/kafka.py", line 485, in __init__
+[2026-05-01T23:56:17.955+0000] {subprocess.py:93} INFO -     client = self.config['kafka_client'](
+[2026-05-01T23:56:17.955+0000] {subprocess.py:93} INFO -              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-05-01T23:56:17.955+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.12/site-packages/kafka/client_async.py", line 262, in __init__
+[2026-05-01T23:56:17.955+0000] {subprocess.py:93} INFO -     self.config['api_version'] = self.check_version()
+[2026-05-01T23:56:17.956+0000] {subprocess.py:93} INFO -                                  ^^^^^^^^^^^^^^^^^^^^
+[2026-05-01T23:56:17.956+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.12/site-packages/kafka/client_async.py", line 1076, in check_version
+[2026-05-01T23:56:17.956+0000] {subprocess.py:93} INFO -     raise Errors.NoBrokersAvailable()
+[2026-05-01T23:56:17.956+0000] {subprocess.py:93} INFO - kafka.errors.NoBrokersAvailable: NoBrokersAvailable
+[2026-05-01T23:56:17.989+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-05-01T23:56:17.989+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T23:56:17.998+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-05-01T23:56:18.002+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=data_pipeline, task_id=exchange_rate_producer, run_id=manual__2026-05-01T23:51:09.786995+00:00, execution_date=20260501T235109, start_date=20260501T235614, end_date=20260501T235618
+[2026-05-01T23:56:18.024+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 128 for task exchange_rate_producer (Bash command failed. The command returned a non-zero exit code 1.; 268)
+[2026-05-01T23:56:18.043+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T23:56:18.062+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T23:56:18.064+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

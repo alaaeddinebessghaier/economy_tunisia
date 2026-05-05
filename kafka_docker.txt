@@ -12,6 +12,7 @@ cd ~/end_to_end_data_engineering_project/kafka-project
 
 🚀 4. Start Kafka + Zookeeper
 sudo docker-compose up -d
+
 	reads docker-compose.yml
 	creates containers:
 	Kafka

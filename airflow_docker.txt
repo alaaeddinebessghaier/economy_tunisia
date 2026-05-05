@@ -1,0 +1,107 @@
+🚀 1. Start Docker service
+sudo systemctl start docker
+
+🧠 Why? Docker engine must be running before anything else works. Like starting your car before driving.
+
+
+🚀 2. Check Docker is working
+bashsudo docker ps
+
+🧠 Why? Confirms Docker is alive and shows what containers are already running. If this fails, Docker isn't started.
+
+
+🚀 3. Go to your Airflow project folder
+cd ~/end_to_end_data_engineering_project/airflow
+
+🧠 Why? All docker compose commands must be run from the folder that contains your docker-compose.yml. Otherwise Docker doesn't know what to start.
+
+
+🚀 4. Clean up any broken state (first time or after errors)
+bashsudo docker compose down --volumes --remove-orphans
+
+🧠 Why? Removes old broken containers, networks, and volumes from previous failed attempts. Gives you a clean slate.
+✅ Safe to run even if nothing is running — it just does nothing
+
+
+🚀 5. Initialize Airflow database (first time only)
+bashsudo docker compose up airflow-init
+
+🧠 Why? Airflow needs a PostgreSQL metadata database to store:
+
+DAG definitions
+Task run history
+Users and connections
+
+This step creates the DB schema and default admin user.
+✅ You only need this once — skip on future runs
+✅ Wait until you see exited with code 0 — that means success
+
+
+
+🚀 6. Start all Airflow services
+bashsudo docker compose up -d
+
+🧠 Why? Starts all 3 containers defined in your docker-compose.yml:
+
+airflow-webserver → the UI at localhost:8080
+airflow-scheduler → watches your DAGs and triggers runs
+airflow-postgres → stores all metadata
+
+-d = detached mode, runs in background so your terminal stays free
+
+
+🚀 7. Check all containers are running
+bashsudo docker ps
+
+🧠 Why? Verify all 3 containers are actually Up, not Exited or Restarting
+You should see:
+
+airflow-airflow-webserver-1 ✅
+airflow-airflow-scheduler-1 ✅
+airflow_postgres ✅
+
+
+
+🚨 If any container is missing or shows Exited:
+bashsudo docker logs airflow-airflow-webserver-1
+sudo docker logs airflow-airflow-scheduler-1
+
+
+
+🚀 8. Open Airflow UI
+http://localhost:8080
+
+🧠 Why? This is your control panel — where you:
+
+See all your DAGs
+Trigger runs manually
+Monitor task progress
+Read task logs
+
+🚀 9. Verify your DAGs are loaded
+bashsudo docker exec -it airflow-airflow-webserver-1 airflow dags list
+
+🧠 Why? Confirms Airflow can find and parse your DAG files
+Your DAG .py files must be inside the dags/ folder to appear here
+🚨 DAG not showing?
+bash# Check for syntax errors in your DAG file
+sudo docker exec -it airflow-airflow-webserver-1 python /opt/airflow/dags/your_dag.py
+
+
+
+🚀 12. Stop everything when done
+bashsudo docker compose down
+
+🧠 Why? Cleanly stops and removes all containers. Your DAGs and data are safe — only the running processes stop.
+
+
+
+Start Docker
+→ cd airflow folder
+→ docker compose down (clean slate)
+→ docker compose up airflow-init (first time only)
+→ docker compose up -d
+→ open localhost:8080
+→ trigger DAG
+→ monitor logs
+→ docker compose down

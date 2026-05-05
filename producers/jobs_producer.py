@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 from kafka import KafkaProducer
@@ -11,7 +12,7 @@ def get_jobs(query):
     url = "https://jsearch.p.rapidapi.com/search"
 
     headers = {
-        "x-rapidapi-key": "8e090c8da6mshad59666debd7febp14c265jsn62a10488af38",
+        "x-rapidapi-key": "8e090c8da6mshad59666debd7febp14c265jsn62a10488af38",  # store in env variable
         "x-rapidapi-host": "jsearch.p.rapidapi.com"
     }
 
@@ -24,13 +25,14 @@ def get_jobs(query):
     }
 
     response = requests.get(url, headers=headers, params=params)
+    response.raise_for_status()  # raises error on 4xx/5xx
 
-    if response.status_code != 200:
-        print("API Error:", response.text)
-        return {}
+    data = response.json()
 
-    return response.json()
+    if "data" not in data:
+        raise ValueError(f"Unexpected API response: {data}")
 
+    return data
 
 
 # -------------------------
@@ -39,14 +41,13 @@ def get_jobs(query):
 def clean_jobs(data, query):
     events = []
 
-    for job in data.get("data", []):  # JSearch uses "data"
+    for job in data.get("data", []):
         events.append({
             "job_id": job.get("job_id"),
             "title": job.get("job_title"),
             "company": job.get("employer_name"),
             "location": job.get("job_city"),
             "salary": job.get("job_min_salary"),
-
             "metadata": {
                 "source": "jsearch-api",
                 "pipeline": "jobs_producer",
@@ -62,25 +63,41 @@ def clean_jobs(data, query):
 # -------------------------
 # 3. KAFKA PRODUCER
 # -------------------------
-producer = KafkaProducer(
-    bootstrap_servers="localhost:9092",
-    value_serializer=lambda v: json.dumps(v).encode("utf-8")
-)
-
-
 def send_to_kafka(events):
-    for event in events:
-        producer.send("job_repos", value=event)
+    producer = KafkaProducer(  # moved here, not global
+        bootstrap_servers="kafka:9092",
+        value_serializer=lambda v: json.dumps(v).encode("utf-8")
+    )
+    try:
+        for event in events:
+            producer.send("job_repos", value=event)
+        producer.flush()
+        print(f"✅ Sent {len(events)} events to Kafka successfully")
+    finally:
+        producer.close()  # always close
 
-    producer.flush()
-    print("✅ Sent to Kafka successfully")
+
+# -------------------------
+# 4. MAIN
+# -------------------------
+def main():
+    query = "data engineer tunisia"
+    raw_data = get_jobs(query)
+    events = clean_jobs(raw_data, query)
+    send_to_kafka(events)
+
+
+if __name__ == "__main__":
+    main()
 
 
 
 
 
 
-query = "data engineer tunisia"
-raw_data = get_jobs(query)
-events = clean_jobs(raw_data, query)
-send_to_kafka(events)
+
+
+
+
+
+    
