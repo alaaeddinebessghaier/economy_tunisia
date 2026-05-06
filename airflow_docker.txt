@@ -17,7 +17,7 @@ cd ~/end_to_end_data_engineering_project/airflow
 
 
 🚀 4. Clean up any broken state (first time or after errors)
-bashsudo docker compose down --volumes --remove-orphans
+bash sudo docker compose down --volumes --remove-orphans
 
 🧠 Why? Removes old broken containers, networks, and volumes from previous failed attempts. Gives you a clean slate.
 ✅ Safe to run even if nothing is running — it just does nothing
@@ -35,7 +35,7 @@ Users and connections
 This step creates the DB schema and default admin user.
 ✅ You only need this once — skip on future runs
 ✅ Wait until you see exited with code 0 — that means success
-
+	
 
 
 🚀 6. Start all Airflow services

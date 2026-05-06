@@ -30,21 +30,21 @@ sudo docker ps
 
 
 🚀 6. Enter Kafka container
-sudo docker exec -it kafka-project_kafka_1 bash
+sudo docker exec -it kafka bash
 🧠 Why?	You need Kafka CLI tools inside container
 
 
 🚀 7. Create a topic
 kafka-topics --create \
 --topic github_repos \
---bootstrap-server localhost:9092 \
+--bootstrap-server kafka:9092 \
 --partitions 1 \
 --replication-factor 1
 
 🧠 Why?	Kafka stores data in topics		No topic → no data storage
 
 🚀 8. Check topic exists
-kafka-topics --list --bootstrap-server localhost:9092
+kafka-topics --list --bootstrap-server kafka:9092
 
 
 🚀 9. Run your Python producer
