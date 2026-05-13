@@ -5,3 +5,4 @@ venv/
 airflow/logs/
 airflow/airflow.db
 spark/logs/
+github_token.txt
