@@ -55,17 +55,17 @@ df_parsed = df_raw \
 
 
 df_parsed.printSchema()
-#df_parsed.show(5, truncate=False)
-#df_parsed.select([sum(col(c).isNull().cast("int")).alias(c) for c in df_parsed.columns]).show()
-#df_parsed.describe("stargazers_count").show()
-#print("total_records:",df_parsed.count())
+df_parsed.show(5, truncate=False)
+df_parsed.select([sum(col(c).isNull().cast("int")).alias(c) for c in df_parsed.columns]).show()
+df_parsed.describe("stargazers_count").show()
+print("total_records:",df_parsed.count())
 
 
 
 #####CLEAN_DF
 
 df_clean = df_parsed.select("id", "language", "stargazers_count", "topics", "fetched_at")
-#df_clean.show(5, truncate=False)
+df_clean.show(5, truncate=False)
 df_clean.groupBy("language").agg(
     F.sum("stargazers_count").alias("total_watch"),
     F.avg("stargazers_count").alias("average_watch")

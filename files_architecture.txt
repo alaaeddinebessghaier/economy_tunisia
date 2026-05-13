@@ -1,17 +1,22 @@
-project/
-│
+end_to_end_data_engineering_project/
 ├── producers/
+│   ├── exchange_rate.py
+│   ├── github_trends.py
 │   ├── jobs_producer.py
-│   ├── news_producer.py
-│   └── fx_producer.py
-│
+│   └── news_producers.py
 ├── spark/
-│   └── stream_processing.py
-│
+│   ├── jobs/
+│   └── utils/
 ├── airflow/
-│   └── dags/pipeline_dag.py
-│
-├── database/
-│   └── schema.sql
-│
-├── docker-compose.yml
+│   └── dags/
+├── docker-compose.yml      ← one file controls everything
+├── Dockerfile.producer     
+└── README.md
+
+
+🐘 Zookeeper — Kafka's brain, manages who's alive and which broker owns what
+📨 Kafka — message queue, holds data between producer and Spark
+🐍 Producer — Python script, fetches data from API and sends to Kafka
+⚡ Spark — reads from Kafka, cleans data, writes to PostgreSQL
+🗄️ PostgreSQL — two instances: one for your data, one for Airflow metadata
+✈️ Airflow — scheduler, triggers Spark jobs on a schedule via DAGs

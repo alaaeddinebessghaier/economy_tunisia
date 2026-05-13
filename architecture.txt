@@ -49,9 +49,8 @@
         ┌────────────────────────────────────────────┐
         │                STORAGE LAYER              │
         │                                            │
-        │ PostgreSQL → analytics tables             │
-        │ Cassandra  → raw events                   │
-        │ Data Lake  → parquet files               │
+        │ PostgreSQL → analytics tables                  │
+        │              │
         └──────────────┬────────────────────────────┘
                        ▼
         ┌────────────────────────────────────────────┐

@@ -83,6 +83,7 @@ bashsudo docker exec -it airflow-airflow-webserver-1 airflow dags list
 
 🧠 Why? Confirms Airflow can find and parse your DAG files
 Your DAG .py files must be inside the dags/ folder to appear here
+
 🚨 DAG not showing?
 bash# Check for syntax errors in your DAG file
 sudo docker exec -it airflow-airflow-webserver-1 python /opt/airflow/dags/your_dag.py

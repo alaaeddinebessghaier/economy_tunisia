@@ -1,0 +1,11 @@
+1 connect to postgres container : docker exec -it postgres psql -U admin -d economy_db
+ 
+2 list all databases : \l
+
+3 connect to your database : \c
+
+4 list all tables : \dt 
+
+5 desccribe a specific table (see columns and types) : \d table_name
+
+6 exit : \q

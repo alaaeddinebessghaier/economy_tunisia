@@ -1,7 +1,7 @@
-airflow/logs/
-climate/
 __pycache__/
 *.pyc
-spark/spark-warehouse/
-*.zip
-.ivy2/
+.env
+venv/
+airflow/logs/
+airflow/airflow.db
+spark/logs/

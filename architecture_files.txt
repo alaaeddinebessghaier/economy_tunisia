@@ -1,0 +1,9 @@
+Docker up → Kafka ready → Airflow triggers producers → Data in Kafka → Spark reads & cleans → Write to DB
+
+1 start docker service : sudo systemctl start docker 
+2 go to project root and start all containers : docker compose up -d
+3 verify all running : docker compose ps (kafka,producer,spark,zookeeper)
+	if any container is not up -> docker compose logs <container_name>
+	
+4 stop from project root : docker compose down
+5 stop airflow separately : docker compose down
