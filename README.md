@@ -57,7 +57,6 @@ end_to_end_data_engineering_project/
 │
 ├── docker-compose.yml                # Main infrastructure
 ├── Dockerfile.producer               # Producer container image
-└── README.md
 
 🚀 Quick Start
 Prerequisites
@@ -66,7 +65,6 @@ Docker + Docker Compose V2
 Git
 
 1. Clone the repo
-bashgit clone https://github.com/your-username/end_to_end_data_engineering_project.git
 cd end_to_end_data_engineering_project
 
 3. Start all containers
@@ -108,9 +106,13 @@ bashdocker exec -it postgres psql -U admin -d economy_db
 📋 Development Phases
 
  Phase 1 — Kafka producers (API → Kafka topics)
+ 
  Phase 2 — Airflow DAGs (scheduled ingestion)
+ 
  Phase 3 — Spark batch jobs (cleaning & transformation)
+ 
  Phase 4 — PostgreSQL storage (write clean data)
+ 
  Phase 5 — Visualization (Superset dashboards)
 
  
