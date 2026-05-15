@@ -33,30 +33,8 @@ Built as a learning project to understand how real-world data engineering pipeli
 
 🗂️ Project Structure
 
-end_to_end_data_engineering_project/
-│
-├── producers/                        # API → Kafka ingestion scripts
-│   ├── github_trends.py
-│   ├── exchange_rate.py
-│   ├── news_producers.py
-│   └── jobs_producer.py
-│
-├── spark/                            # Spark batch processing
-│   ├── jobs/
-│   │   ├── github_spark.py
-│   │   ├── exchange_rates_spark.py
-│   │   ├── news_feed_spark.py
-│   │   └── jobs_spark.py
-│   └── utils/
-│       └── spark_session.py          # Shared SparkSession factory
-│
-├── airflow/                          # Orchestration
-│   ├── dags/
-│   │   └── pipeline_dag.py
-│   └── docker-compose.yml
-│
-├── docker-compose.yml                # Main infrastructure
-├── Dockerfile.producer               # Producer container image
+<img width="612" height="569" alt="Screenshot from 2026-05-15 10-29-08" src="https://github.com/user-attachments/assets/b9d964d6-3700-42cc-a55f-a1d4c8bf7d2f" />
+
 
 🚀 Quick Start
 Prerequisites
