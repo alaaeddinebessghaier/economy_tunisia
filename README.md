@@ -49,48 +49,49 @@ cd end_to_end_data_engineering_project
 bashdocker compose up -d --
 
 4. Verify everything is running
-bashdocker compose ps
-NAME         STATUS
-zookeeper    Up
-kafka        Up
-producer     Up
-spark        Up
-postgres     Up
+   
+  bashdocker compose ps
+  NAME         STATUS
+  zookeeper    Up
+  kafka        Up
+  producer     Up
+  spark        Up
+  postgres     Up
 
 5. Start Airflow
-bashcd airflow && docker compose up -d
-Open: http://localhost:8080
+  bashcd airflow && docker compose up -d
+  Open: http://localhost:8080
 
-7. Create Kafka topics (first time only)
-bashdocker exec -it kafka bash
+6. Create Kafka topics (first time only)
+  bashdocker exec -it kafka bash
 
-kafka-topics --create --topic github_repos \
-  --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1
-
-
-7. Run a Spark job manually
-bashdocker exec -it spark bash
-
-spark-submit \
-  --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
-  /app/spark/jobs/github_spark.py
+  kafka-topics --create --topic github_repos \
+    --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1
 
 
-8. Check data in PostgreSQL
-bashdocker exec -it postgres psql -U admin -d economy_db
+8. Run a Spark job manually
+  bashdocker exec -it spark bash
 
-\dt                              -- list tables
+  spark-submit \
+    --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
+    /app/spark/jobs/github_spark.py
+
+
+9. Check data in PostgreSQL
+  bashdocker exec -it postgres psql -U admin -d economy_db
+
+  \dt                              -- list tables
 
 📋 Development Phases
 
- Phase 1 — Kafka producers (API → Kafka topics)
- 
- Phase 2 — Airflow DAGs (scheduled ingestion)
- 
- Phase 3 — Spark batch jobs (cleaning & transformation)
- 
- Phase 4 — PostgreSQL storage (write clean data)
- 
- Phase 5 — Visualization (Superset dashboards)
+   Phase 1 — Kafka producers (API → Kafka topics)
+   
+   Phase 2 — Airflow DAGs (scheduled ingestion)
+   
+   Phase 3 — Spark batch jobs (cleaning & transformation)
+   
+   Phase 4 — PostgreSQL storage (write clean data)
+   
+   Phase 5 — Visualization (Superset dashboards)
 
  
