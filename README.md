@@ -1,6 +1,10 @@
+<div align="center">
+
+# 🏗️ End-to-End Data Engineering Pipeline
 ![Python](https://img.shields.io/badge/Python-3.12-blue?style=flat-square&logo=python)
 ![Kafka](https://img.shields.io/badge/Apache_Kafka-7.5.0-231F20?style=flat-square&logo=apachekafka)
 ![Spark](https://img.shields.io/badge/Apache_Spark-3.5.0-E25A1C?style=flat-square&logo=apachespark)
 ![Airflow](https://img.shields.io/badge/Airflow-2.x-017CEE?style=flat-square&logo=apacheairflow)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=flat-square&logo=postgresql)
 ![Docker](https://img.shields.io/badge/Docker-Compose_V2-2496ED?style=flat-square&logo=docker)
+</div>
