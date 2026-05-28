@@ -11,3 +11,4 @@ climate/
 venv/
 .venv/
 .env
+*.swp
