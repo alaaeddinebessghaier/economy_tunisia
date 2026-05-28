@@ -4,12 +4,13 @@ import json
 from kafka import KafkaProducer
 from datetime import datetime, timezone
 
+load_dotenv()  # loads .env from project root
 
 # -------------------------
 # 1. FETCH DATA FROM API
 # -------------------------
 def fetch_data():
-    api_key = "e2a842c273392049533aef62"
+    api_key = os.getenv("EXCHANGERATE_API")
     url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/TND"
 
     response = requests.get(url)

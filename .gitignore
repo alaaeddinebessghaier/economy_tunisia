@@ -6,3 +6,8 @@ airflow/logs/
 airflow/airflow.db
 spark/logs/
 github_token.txt
+climate/
+*.jar
+venv/
+.venv/
+.env

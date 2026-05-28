@@ -3,9 +3,10 @@ import json
 from kafka import KafkaProducer
 from datetime import datetime, timezone
 
+load_dotenv()
 
 def get_data():
-    api_key = "b73011193c264958ae2418f4e1bb3902"
+    api_key = os.getenv("NEWS_API")
     url = f"https://newsapi.org/v2/everything?q=economy+tunisia&apiKey={api_key}"
 
     response = requests.get(url)

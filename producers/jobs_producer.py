@@ -4,6 +4,7 @@ import json
 from kafka import KafkaProducer
 from datetime import datetime, timezone
 
+load_dotenv()
 
 # -------------------------
 # 1. FETCH DATA FROM API
@@ -12,7 +13,7 @@ def get_jobs(query):
     url = "https://jsearch.p.rapidapi.com/search"
 
     headers = {
-        "x-rapidapi-key": "8e090c8da6mshad59666debd7febp14c265jsn62a10488af38",  # store in env variable
+        "x-rapidapi-key": os.getenv("RAPID_API"),  # store in env variable
         "x-rapidapi-host": "jsearch.p.rapidapi.com"
     }
 
