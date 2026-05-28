@@ -73,3 +73,6 @@ services:
 volumes:                                           # ← one volumes block at the end
   spark-ivy-cache:
   postgres-data:
+
+env_file:
+  - .env
